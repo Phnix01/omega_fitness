@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OMEGA FITNESS | Transformez votre corps, libérez votre potentiel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Splash Screen -->
+  <div id="splashscreen">
+    <div id="lottie-container"></div>
+    <img src="omega_fitness_white.svg" alt="Omega Fitness" class="splash-logo-img">
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <a href="#" class="logo"><img src="omega_fitness_white.svg" alt="Omega Fitness" class="logo-img"></a>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#programs">Programmes</a></li>
+      <li><a href="#pricing">Tarifs</a></li>
+      <li><a href="#testimonials">Témoignages</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="mobile-menu-btn">
+      <i class="fas fa-bars"></i>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="fade-in">Transformez <span>votre corps</span>, libérez votre potentiel</h1>
+      <p class="fade-in delay-1">Rejoignez la révolution fitness avec des programmes personnalisés et des coachs experts pour atteindre vos objectifs</p>
+      <div class="app-buttons fade-in delay-2">
+        <a href="#" class="app-btn android-btn">
+          <div class="icon">
+            <i class="fab fa-android"></i>
+          </div>
+          <div class="text">
+            <span>Disponible sur</span>
+            <span>Google Play</span>
+          </div>
+        </a>
+        <a href="#" class="app-btn ios-btn">
+          <div class="icon">
+            <i class="fab fa-apple"></i>
+          </div>
+          <div class="text">
+            <span>Télécharger sur</span>
+            <span>App Store</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title slide-in-left">Notre philosophie</h2>
+    <p class="section-subtitle slide-in-right">
+      Chez OMEGA FITNESS, nous croyons que chacun peut transformer son corps et sa vie avec le bon encadrement, la bonne motivation et les bonnes techniques.
+    </p>
+    
+    <div class="grid">
+      <div class="card fade-in">
+        <h3><i class="fas fa-dumbbell"></i> Équipement premium</h3>
+        <p>Matériel de dernière génération pour des entraînements optimaux et sécurisés.</p>
+      </div>
+      <div class="card fade-in" style="transition-delay: 0.2s">
+        <h3><i class="fas fa-user-tie"></i> Coachs experts</h3>
+        <p>Des professionnels certifiés pour vous guider vers vos objectifs personnels.</p>
+      </div>
+      <div class="card fade-in" style="transition-delay: 0.4s">
+        <h3><i class="fas fa-heartbeat"></i> Approche holistique</h3>
+        <p>Combinaison parfaite entre entraînement, nutrition et bien-être mental.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Programs Section -->
+  <section id="programs">
+    <h2 class="section-title slide-in-left">Nos programmes</h2>
+    <p class="section-subtitle slide-in-right">Des solutions adaptées à tous les niveaux et objectifs</p>
+    
+    <ul class="feature-list">
+      <li class="fade-in">
+        <i class="fas fa-running"></i>
+        <div>
+          <strong>Perte de poids</strong> - Programme complet combinant cardio et musculation pour brûler les graisses efficacement
+        </div>
+      </li>
+      <li class="fade-in" style="transition-delay: 0.1s">
+        <i class="fas fa-dumbbell"></i>
+        <div>
+          <strong>Prise de masse</strong> - Développez votre musculature avec des exercices ciblés et un suivi nutritionnel
+        </div>
+      </li>
+      <li class="fade-in" style="transition-delay: 0.2s">
+        <i class="fas fa-heart"></i>
+        <div>
+          <strong>Remise en forme</strong> - Retrouvez énergie et vitalité avec des séances adaptées à votre condition
+        </div>
+      </li>
+      <li class="fade-in" style="transition-delay: 0.3s">
+        <i class="fas fa-medal"></i>
+        <div>
+          <strong>Préparation compétition</strong> - Programme intensif pour les athlètes souhaitant performer
+        </div>
+      </li>
+      <li class="fade-in" style="transition-delay: 0.4s">
+        <i class="fas fa-child"></i>
+        <div>
+          <strong>Fitness senior</strong> - Maintenez votre mobilité et votre santé avec des exercices adaptés
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="pricing">
+    <h2 class="section-title fade-in">Nos offres</h2>
+    <p class="section-subtitle fade-in">Choisissez la formule qui correspond à vos ambitions</p>
+    
+    <div class="pricing-grid">
+      <div class="pricing-card fade-in">
+        <h3>Débutant</h3>
+        <div class="price">25.000 <span>FCFA/mois</span></div>
+        <ul>
+          <li><i class="fas fa-check"></i> Accès illimité à la salle</li>
+          <li><i class="fas fa-check"></i> Horaires standards</li>
+          <li><i class="fas fa-check"></i> 1 séance coaching/mois</li>
+          <li><i class="fas fa-times"></i> Programme personnalisé</li>
+          <li><i class="fas fa-times"></i> Accès aux cours collectifs</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline">Choisir cette offre</a>
+      </div>
+      
+      <div class="pricing-card popular fade-in" style="transition-delay: 0.2s">
+        <h3>Avancé</h3>
+        <div class="price">45.000 <span>FCFA/mois</span></div>
+        <ul>
+          <li><i class="fas fa-check"></i> Accès illimité à la salle</li>
+          <li><i class="fas fa-check"></i> Horaires étendus</li>
+          <li><i class="fas fa-check"></i> 4 séances coaching/mois</li>
+          <li><i class="fas fa-check"></i> Programme personnalisé</li>
+          <li><i class="fas fa-check"></i> Accès illimité aux cours</li>
+        </ul>
+        <a href="#contact" class="btn pulse">Choisir cette offre</a>
+      </div>
+      
+      <div class="pricing-card fade-in" style="transition-delay: 0.4s">
+        <h3>Premium</h3>
+        <div class="price">65.000 <span>FCFA/mois</span></div>
+        <ul>
+          <li><i class="fas fa-check"></i> Accès illimité 24/7</li>
+          <li><i class="fas fa-check"></i> Coach personnel dédié</li>
+          <li><i class="fas fa-check"></i> Suivi nutritionnel</li>
+          <li><i class="fas fa-check"></i> Programme sur mesure</li>
+          <li><i class="fas fa-check"></i> Cours illimités + spa</li>
+        </ul>
+        <a href="#contact" class="btn btn-outline">Choisir cette offre</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials">
+    <h2 class="section-title slide-in-left">Ils nous font confiance</h2>
+    <p class="section-subtitle slide-in-right">Découvrez les témoignages de nos membres</p>
+    
+    <div class="testimonial-grid">
+      <div class="testimonial-card fade-in">
+        <div class="testimonial-content">
+          <p class="testimonial-text">En seulement 3 mois, j'ai perdu 12kg grâce au programme personnalisé et au suivi des coachs. Une vraie révolution pour moi !</p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Aïcha Moussa" class="author-avatar">
+            <div class="author-info">
+              <h4>Aïcha Moussa</h4>
+              <p>Membre depuis 2022</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card fade-in" style="transition-delay: 0.2s">
+        <div class="testimonial-content">
+          <p class="testimonial-text">L'ambiance et la qualité des équipements n'ont rien à voir avec les autres salles. Je me suis enfin pris au jeu du fitness !</p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Boubacar Diallo" class="author-avatar">
+            <div class="author-info">
+              <h4>Boubacar Diallo</h4>
+              <p>Membre depuis 2021</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card fade-in" style="transition-delay: 0.4s">
+        <div class="testimonial-content">
+          <p class="testimonial-text">Après mon accouchement, les coachs m'ont aidée à retrouver confiance en moi avec un programme adapté. Merci MA FITNESS !</p>
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Fatima Issaka" class="author-avatar">
+            <div class="author-info">
+              <h4>Fatima Issaka</h4>
+              <p>Membre depuis 2023</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title slide-in-left">Prêt à commencer ?</h2>
+    <p class="section-subtitle slide-in-right">Contactez-nous pour plus d'informations</p>
+    
+    <div class="grid">
+      <div class="card fade-in">
+        <h3><i class="fas fa-map-marker-alt"></i> Notre salle</h3>
+        <p>Rue Palais Présidentiel<br>Avenue Général De Gaulle</p>
+        
+        <h3 style="margin-top: 2rem;"><i class="fas fa-clock"></i> Horaires</h3>
+        <p>Lundi - Vendredi: 6h - 23h<br>
+        Samedi: 8h - 20h<br>
+        Dimanche: 9h - 16h</p>
+        
+        <h3 style="margin-top: 2rem;"><i class="fas fa-phone"></i> Contact</h3>
+        <p>Email: <a href="mailto:contact@omegafitness.ne" style="color: var(--accent-red);">contact@omegafitness.ne</a><br>
+        Téléphone: <a href="tel:+22700000000" style="color: var(--accent-red);">XX XX XX XX</a></p>
+        
+        <h3 style="margin-top: 2rem;"><i class="fas fa-mobile-alt"></i> Téléchargez l'app</h3>
+        <div class="app-buttons" style="margin-top: 1rem; justify-content: flex-start;">
+          <a href="#" class="app-btn android-btn" style="min-width: auto; padding: 0.8rem 1.5rem; margin-bottom: 0.5rem;">
+            <div class="icon">
+              <i class="fab fa-android"></i>
+            </div>
+            <div class="text">
+              <span>Android</span>
+            </div>
+          </a>
+          <a href="#" class="app-btn ios-btn" style="min-width: auto; padding: 0.8rem 1.5rem;">
+            <div class="icon">
+              <i class="fab fa-apple"></i>
+            </div>
+            <div class="text">
+              <span>iOS</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      
+      <form class="card fade-in" style="transition-delay: 0.2s">
+        <h3 style="margin-bottom: 2rem;">Demandez des informations</h3>
+        <div style="display: grid; gap: 1.5rem;">
+          <div>
+            <input type="text" placeholder="Votre nom" style="width: 100%; padding: 1rem; background: var(--primary-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
+          </div>
+          <div>
+            <input type="email" placeholder="Votre email" style="width: 100%; padding: 1rem; background: var(--primary-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
+          </div>
+          <div>
+            <input type="tel" placeholder="Votre téléphone" style="width: 100%; padding: 1rem; background: var(--primary-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
+          </div>
+          <div>
+            <select style="width: 100%; padding: 1rem; background: var(--primary-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;">
+              <option>Programme qui vous intéresse</option>
+              <option>Perte de poids</option>
+              <option>Prise de masse</option>
+              <option>Remise en forme</option>
+              <option>Préparation compétition</option>
+              <option>Fitness senior</option>
+            </select>
+          </div>
+          <div>
+            <textarea placeholder="Votre message (optionnel)" rows="4" style="width: 100%; padding: 1rem; background: var(--primary-dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; color: white;"></textarea>
+          </div>
+          <button type="submit" class="btn">Envoyer la demande <i class="fas fa-paper-plane"></i></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-about">
+        <a href="#" class="footer-logo"><img src="omega_fitness_white.svg" alt="Omega Fitness" class="logo-img "></a>
+        <p>Transformez votre corps, libérez votre potentiel avec notre salle de fitness premium et nos coachs experts.</p>
+        <div class="app-buttons" style="justify-content: flex-start; margin-top: 1.5rem;">
+          <a href="#" class="app-btn android-btn" style="min-width: auto; padding: 0.8rem 1.2rem; margin-right: 0.5rem;">
+            <div class="icon">
+              <i class="fab fa-android"></i>
+            </div>
+          </a>
+          <a href="#" class="app-btn ios-btn" style="min-width: auto; padding: 0.8rem 1.2rem;">
+            <div class="icon">
+              <i class="fab fa-apple"></i>
+            </div>
+          </a>
+        </div>
+        <div class="social-links" style="margin-top: 1.5rem;">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h3>Liens rapides</h3>
+        <ul>
+          <li><a href="#about">À propos</a></li>
+          <li><a href="#programs">Programmes</a></li>
+          <li><a href="#pricing">Tarifs</a></li>
+          <li><a href="#testimonials">Témoignages</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="#">Coaching personnel</a></li>
+          <li><a href="#">Nutrition</a></li>
+          <li><a href="#">Cours collectifs</a></li>
+          <li><a href="#">Espace bien-être</a></li>
+          <li><a href="#">Événements</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h3>Légal</h3>
+        <ul>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">CGU</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 OMEGA FITNESS. Tous droits réservés. <span style="color: var(--accent-red);">Transformez votre vie.</span></p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js" defer></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
