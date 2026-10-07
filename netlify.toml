@@ -1,4 +1,4 @@
-# Netlify configuration for MA FITNESS
+# Netlify configuration for OMEGA FITNESS (site statique : HTML/CSS/JS vanilla, aucune étape de build)
 [build]
   publish = "."
 
@@ -11,7 +11,16 @@
   to = "/index.html"
   status = 200
 
-# Headers for security and performance
+# ---------------------------------------------------------------------------
+# Sécurité (toutes les réponses)
+# CSP : vérifiée en local (aucune violation : splash Lottie, three.js, formulaire,
+# polices auto-hébergées). Les deux scripts inline de index.html (script d'état du
+# <head> et importmap three) sont autorisés par leur empreinte SHA-256 :
+# SI L'UN DES DEUX CHANGE (même un espace), il faut recalculer son empreinte, sinon
+# le navigateur le bloque (la page reste lisible : rendu sans JS / Ω de repli).
+#   python3 -c "import re,hashlib,base64;s=open('index.html',encoding='utf-8').read();[print('sha256-'+base64.b64encode(hashlib.sha256(m.encode()).digest()).decode()) for m in re.findall(r'<script(?![^>]*src=)[^>]*>(.*?)</script>',s,re.S)]"
+# connect-src https://api.web3forms.com : fournisseur de formulaire optionnel de js/main.js.
+# ---------------------------------------------------------------------------
 [[headers]]
   for = "/*"
   [headers.values]
@@ -20,33 +29,51 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'sha256-WFBDquaU/SBhjXxkt4NNoxRMcMG/MNOkZhRxe/T5tKM=' 'sha256-1gZTfGrjlFCpowqo49dAfCk6D9aYg2Eg2Yb3qYgsPl4=' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; style-src 'self'; font-src 'self'; img-src 'self' data:; connect-src 'self' https://api.web3forms.com; form-action 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'"
 
+# ---------------------------------------------------------------------------
+# Cache. Aucun nom de fichier n'est haché : PAS de "immutable 1 an" sur le HTML,
+# le CSS, le JS ni les images (un visiteur garderait l'ancienne version).
+# Règles sans chevauchement (une seule règle Cache-Control par chemin).
+# ---------------------------------------------------------------------------
+
+# HTML : toujours revalidé (Netlify répond 304 via ETag, et purge son CDN à chaque déploiement).
 [[headers]]
-  for = "/*.css"
+  for = "/"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/*.js"
+  for = "/index.html"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=0, must-revalidate"
 
+# CSS / JS : 1 h puis revalidation. index.html les appelle avec ?v=AAAAMMJJ :
+# incrémenter ce paramètre à chaque déploiement qui les modifie (effet immédiat).
 [[headers]]
-  for = "/*.jpg"
+  for = "/css/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
 [[headers]]
-  for = "/*.png"
+  for = "/js/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=3600, must-revalidate"
 
+# Images et animation : 7 jours puis revalidation (changent rarement, noms non hachés).
 [[headers]]
-  for = "/*.svg"
+  for = "/assets/img/*"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "public, max-age=604800, must-revalidate"
 
 [[headers]]
-  for = "/*.webp"
+  for = "/assets/animations/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, must-revalidate"
+
+# Polices : le nom contient la version de la police (archivo-v25-…) : contenu figé,
+# donc immutable. Une nouvelle version = un nouveau nom de fichier.
+[[headers]]
+  for = "/assets/fonts/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"

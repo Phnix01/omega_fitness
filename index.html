@@ -32,6 +32,10 @@
       h.classList.add('js');
       try { skip = sessionStorage.getItem('omega-splash') === '1'; } catch (e) {}
       if (!skip && window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) skip = true;
+      /* Perf : en mode économie de données ou sur réseau lent (2G/3G effectif), la Lottie n'arriverait
+         pas avant le plafond de 1,6 s (splash = écran noir) : on l'ignore pour ne pas retarder le hero. */
+      var c = navigator.connection;
+      if (!skip && c && (c.saveData || /2g|3g/.test(c.effectiveType || ''))) skip = true;
       if (skip) {
         h.classList.add('splash-skip');
       } else {
@@ -40,6 +44,14 @@
         s.async = true;
         s.src = 'https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie_light.min.js';
         d.head.appendChild(s);
+        /* JSON téléchargé en parallèle de la lib (sinon : lib, puis JSON, en série). Même mode
+           (cors, same-origin) que le XHR de lottie, donc la réponse préchargée est réutilisée. */
+        var l = d.createElement('link');
+        l.rel = 'preload';
+        l.as = 'fetch';
+        l.crossOrigin = 'anonymous';
+        l.href = 'assets/animations/loading_hand.json';
+        d.head.appendChild(l);
       }
       /* Filet de sécurité : si js/main.js ne s'est pas signalé (html.main-ready), on repasse en rendu sans JS. */
       setTimeout(function () {
@@ -51,20 +63,23 @@
     })(document);
   </script>
 
-  <!-- Polices -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400..600&display=swap" rel="stylesheet">
+  <!-- Polices auto-hébergées (Archivo + Instrument Sans, OFL, sous-ensemble latin ; @font-face dans css/main.css).
+       Préchargées : le h1 du hero (LCP) est en Archivo, le corps en Instrument Sans. -->
+  <link rel="preload" href="assets/fonts/archivo-v25-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/instrument-sans-v4-latin.woff2" as="font" type="font/woff2" crossorigin>
 
-  <link rel="stylesheet" href="css/main.css?v=20261006">
+  <link rel="stylesheet" href="css/main.css?v=20261007">
 
-  <!-- three.js (contrat d'intégration) -->
+  <!-- three.js (contrat d'intégration). Build minifié : 171 Ko au lieu de 263 Ko transférés, 2x moins de JS à parser.
+       Pas de modulepreload statique : hero-scene.js le précharge lui-même, seulement si WebGL2 est disponible. -->
   <script type="importmap">
-    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
   </script>
-  <script type="module" src="js/hero-scene.js"></script>
-  <script src="js/main.js?v=20261006" defer></script>
+  <!-- main.js pilote la sortie du splash et l'entrée du hero (donc le LCP) : différé, priorité haute.
+       hero-scene.js est décoratif : module async (ne retarde pas DOMContentLoaded, donc pas la sortie du splash),
+       priorité basse ; il attend lui-même le DOM, puis l'événement load pour télécharger three. -->
+  <script src="js/main.js?v=20261007" defer fetchpriority="high"></script>
+  <script type="module" src="js/hero-scene.js?v=20261007" async fetchpriority="low"></script>
 </head>
 <body>
   <!-- Sprite d'icônes (remplace Font Awesome). Icons: Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com - License CC BY 4.0 (https://fontawesome.com/license/free) - Copyright 2023 Fonticons, Inc. -->
@@ -117,7 +132,7 @@
       <a class="brand" href="#top" aria-label="Omega Fitness Club, retour en haut de page">
         <picture>
           <source type="image/webp" srcset="assets/img/logo-white-480.webp 480w, assets/img/logo-white-960.webp 960w" sizes="150px">
-          <img src="assets/img/logo-white-480.png" srcset="assets/img/logo-white-480.png 480w, assets/img/logo-white-960.png 960w" sizes="150px" width="480" height="205" alt="Omega Fitness Club" decoding="async" fetchpriority="high">
+          <img src="assets/img/logo-white-480.png" srcset="assets/img/logo-white-480.png 480w, assets/img/logo-white-960.png 960w" sizes="150px" width="480" height="205" alt="Omega Fitness Club" decoding="async">
         </picture>
       </a>
 
@@ -182,7 +197,7 @@
       <div class="hero__content container">
         <h1 class="hero__title" id="hero-title" data-split="lines">
           <span class="hero__line hero__line--1"><span class="hero__line-inner" data-hero-step="line1">Transformez votre corps,</span></span>
-          <span class="hero__line hero__line--2"><span class="hero__line-inner" data-hero-step="line2">libérez votre potentiel</span></span>
+          <span class="hero__line hero__line--2" data-ghost="libérez votre potentiel"><span class="hero__line-inner" data-hero-step="line2">libérez votre potentiel</span></span>
         </h1>
         <p class="hero__lead" data-hero-step="lead">Rejoignez la révolution fitness avec des programmes personnalisés et des coachs experts pour atteindre vos objectifs</p>
         <div class="store-group hero__stores" data-hero-step="actions">
@@ -590,12 +605,14 @@
             <svg class="icon store-btn__icon" aria-hidden="true" focusable="false"><use href="#i-apple"/></svg>
           </button>
         </div>
+        <!-- À RÉACTIVER avec les vraies URL des comptes (fournies par le club) : pas de href="#"
         <ul class="social">
-          <li><a class="social__link" href="#" aria-label="Facebook"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-facebook-f"/></svg></a></li>
-          <li><a class="social__link" href="#" aria-label="Instagram"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></a></li>
-          <li><a class="social__link" href="#" aria-label="Twitter"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-twitter"/></svg></a></li>
-          <li><a class="social__link" href="#" aria-label="YouTube"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg></a></li>
+          <li><a class="social__link" href="URL_FACEBOOK" aria-label="Facebook"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-facebook-f"/></svg></a></li>
+          <li><a class="social__link" href="URL_INSTAGRAM" aria-label="Instagram"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-instagram"/></svg></a></li>
+          <li><a class="social__link" href="URL_TWITTER" aria-label="Twitter"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-twitter"/></svg></a></li>
+          <li><a class="social__link" href="URL_YOUTUBE" aria-label="YouTube"><svg class="icon" aria-hidden="true" focusable="false"><use href="#i-youtube"/></svg></a></li>
         </ul>
+        -->
       </div>
 
       <nav class="footer__col" aria-labelledby="footer-links-title">
@@ -612,23 +629,25 @@
       <div class="footer__col">
         <h3 class="footer__title">Services</h3>
         <ul class="footer__list">
-          <li><a href="#">Coaching personnel</a></li>
-          <li><a href="#">Nutrition</a></li>
-          <li><a href="#">Cours collectifs</a></li>
-          <li><a href="#">Espace bien-être</a></li>
-          <li><a href="#">Événements</a></li>
+          <li><span class="footer__item">Coaching personnel</span></li>
+          <li><span class="footer__item">Nutrition</span></li>
+          <li><span class="footer__item">Cours collectifs</span></li>
+          <li><span class="footer__item">Espace bien-être</span></li>
+          <li><span class="footer__item">Événements</span></li>
         </ul>
       </div>
 
-      <nav class="footer__col" aria-labelledby="footer-legal-title">
+      <!-- Pages légales pas encore rédigées : texte simple. Remettre des <a href="/mentions-legales"> etc.
+           (et repasser ce bloc en <nav aria-labelledby="footer-legal-title">) quand elles existent. -->
+      <div class="footer__col">
         <h3 class="footer__title" id="footer-legal-title">Légal</h3>
         <ul class="footer__list">
-          <li><a href="#">Mentions légales</a></li>
-          <li><a href="#">CGU</a></li>
-          <li><a href="#">Politique de confidentialité</a></li>
-          <li><a href="#">Cookies</a></li>
+          <li><span class="footer__item">Mentions légales</span></li>
+          <li><span class="footer__item">CGU</span></li>
+          <li><span class="footer__item">Politique de confidentialité</span></li>
+          <li><span class="footer__item">Cookies</span></li>
         </ul>
-      </nav>
+      </div>
     </div>
 
     <div class="container footer__bottom">
